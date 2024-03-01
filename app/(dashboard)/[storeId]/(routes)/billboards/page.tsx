@@ -13,13 +13,7 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
 			createdAt: 'desc',
 		},
 	})
-
-	const imageView = (imageUrl: string) => {
-		return `<img :src=${imageUrl} alt="Name" />`
-	}
-
 	const formattedBillboard: BillboardColumn[] = billboards.map((item) => ({
-		image: <imageView imageUrl={item.imageUrl} />,
 		id: item.id,
 		label: item.label,
 		createdAt: format(item.createdAt, 'MMMM do, yyyy'),
