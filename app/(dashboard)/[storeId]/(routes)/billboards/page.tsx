@@ -2,6 +2,7 @@ import prismadb from '@/lib/prismadb'
 import { BillboardClient } from './components/client'
 import { BillboardColumn } from './components/columns'
 import { format } from 'date-fns'
+import { useEffect } from 'react'
 
 const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
 	const billboards = await prismadb.billboard.findMany({
@@ -13,7 +14,12 @@ const BillboardsPage = async ({ params }: { params: { storeId: string } }) => {
 		},
 	})
 
+	const imageView = (imageUrl: string) => {
+		return `<img :src=${imageUrl} alt="Name" />`
+	}
+
 	const formattedBillboard: BillboardColumn[] = billboards.map((item) => ({
+		image: <imageView imageUrl={item.imageUrl} />,
 		id: item.id,
 		label: item.label,
 		createdAt: format(item.createdAt, 'MMMM do, yyyy'),
